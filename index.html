@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -61,13 +62,14 @@ th,td{padding:15px;border-bottom:1px solid var(--border);text-align:left;vertica
 th{background:#f1f8f3}
 .copybox{background:#102719;color:#fff;border-radius:22px;padding:20px;margin-top:18px}
 .copybox textarea{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;min-height:220px}
+.leadbox{background:linear-gradient(135deg,#f4fff5,#e8f7ec);border:2px solid #cfe8d5;margin-top:22px}
 .author{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;background:linear-gradient(135deg,#fff,#ecfdf3)}
 .authorSide{background:#12351f;color:#fff;border-radius:20px;padding:23px}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .tag{background:rgba(255,255,255,.13);border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800}
 .footer{text-align:center;color:var(--muted);margin-top:28px;font-size:14px}
 @media(max-width:900px){.grid2,.grid3,.formgrid,.metrics,.recgrid,.author{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:30px}}
-@media print{.form,.hero .btn{display:none}.card,.hero{box-shadow:none}}
+@media print{.form,.hero .btn,.leadbox{display:none}.card,.hero{box-shadow:none}}
 </style>
 </head>
 <body>
@@ -164,55 +166,22 @@ th{background:#f1f8f3}
     </div>
   </div>
 </section>
-<div class="card" style="margin-top:20px; background:linear-gradient(135deg,#f4fff5,#e8f7ec); border:2px solid #cfe8d5;">
 
+<section class="card leadbox">
   <span class="pill">🌿 Разбор со мной</span>
-
-  <h2 style="margin-top:10px;">
-    Хотите глубже разобрать ваш план продаж?
-  </h2>
-
-  <p class="muted">
-    Иногда достаточно одного взгляда со стороны,
-    чтобы увидеть:
-    где теряются деньги,
-    почему нет стабильных продаж
-    и какие действия реально дадут результат.
-  </p>
-
-  <div class="formgrid" style="margin-top:18px;">
-
-    <div>
-      <label>Ваше имя</label>
-      <input type="text" placeholder="Например: Асель">
-    </div>
-
-    <div>
-      <label>WhatsApp</label>
-      <input type="text" placeholder="+7 777 000 00 00">
-    </div>
-
+  <h2>Хотите глубже разобрать ваш план продаж?</h2>
+  <p class="muted">Иногда достаточно одного взгляда со стороны, чтобы увидеть: где теряются деньги, почему нет стабильных продаж и какие действия реально дадут результат.</p>
+  <div class="formgrid">
+    <div><label>Ваше имя</label><input id="leadName" type="text" placeholder="Например: Асель"></div>
+    <div><label>WhatsApp</label><input id="leadPhone" type="text" placeholder="+7 777 000 00 00"></div>
+    <div class="full"><label>Коротко о вашей ситуации</label><textarea id="leadMessage" placeholder="Что сейчас не получается или какую цель хотите достичь"></textarea></div>
     <div class="full">
-      <label>Коротко о вашей ситуации</label>
-
-      <textarea placeholder="Что сейчас не получается или какую цель хотите достичь"></textarea>
+      <button class="btn btn-green" onclick="sendWhatsApp()">Написать в WhatsApp</button>
+      <p class="hint">Важно: перед публикацией замените номер WhatsApp внутри кода на свой.</p>
     </div>
-
-    <div class="full">
-
-      <a
-        class="btn btn-green"
-        target="_blank"
-        href="https://wa.me/77770000000"
-      >
-        Написать в WhatsApp
-      </a>
-
-    </div>
-
   </div>
+</section>
 
-</div>
 <section class="card">
   <span class="pill">Важная мысль</span>
   <h2>Если чек маленький, а цель большая — дело не только в контенте</h2>
@@ -343,6 +312,16 @@ function calculatePlan(){
 }
 function copyPlan(){const el=document.getElementById('copyText');el.select();document.execCommand('copy');alert('План скопирован.')}
 function resetForm(){['niche','goal','check','hoursPerClient','workHours','base','followers','budget','offers'].forEach(id=>document.getElementById(id).value='');document.getElementById('traffic').value='no';document.getElementById('warmth').value='medium';document.getElementById('result').classList.remove('show')}
+function sendWhatsApp(){
+  const name=val('leadName')||'не указано';
+  const phone=val('leadPhone')||'не указан';
+  const msg=val('leadMessage')||'Хочу разобрать план продаж';
+  const text='Здравствуйте, Асель! Хочу разобрать план продаж.\n\nИмя: '+name+'\nWhatsApp: '+phone+'\nСитуация: '+msg;
+  const yourNumber='77086958505';
+  window.open('https://wa.me/'+yourNumber+'?text='+encodeURIComponent(text),'_blank');
+}
 </script>
 </body>
 </html>
+
+
