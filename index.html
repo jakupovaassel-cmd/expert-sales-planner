@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План продаж на месяц</title>
+<style>
+:root{
+  --green:#166534;--green2:#15803d;--light:#eef9f0;--bg:#f5fbf4;
+  --text:#152318;--muted:#617066;--card:#fff;--border:#d9eadc;
+  --yellow:#fff7d6;--red:#fff1f2;--orange:#fff7ed;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial, sans-serif;background:radial-gradient(circle at top left,#d8f3df,transparent 35%),var(--bg);color:var(--text);line-height:1.6}
+.container{width:min(1120px,92%);margin:0 auto;padding:34px 0 70px}
+.hero{background:linear-gradient(135deg,#0f3d22,#166534,#22c55e);color:#fff;border-radius:32px;padding:44px;box-shadow:0 18px 45px rgba(22,101,52,.18);position:relative;overflow:hidden}
+.hero:after{content:"₸";position:absolute;right:25px;bottom:-70px;font-size:220px;font-weight:900;opacity:.08}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:18px}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.05;margin:0 0 16px;max-width:850px}
+.hero p{font-size:19px;max-width:760px;opacity:.95}
+.btn{border:0;border-radius:15px;padding:14px 20px;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;margin:6px 8px 6px 0}
+.btn-white{background:#fff;color:var(--green)}
+.btn-green{background:var(--green);color:#fff}
+.btn-soft{background:var(--light);color:var(--green)}
+section{margin-top:24px}
+.grid{display:grid;gap:18px}
+.grid2{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.card{background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:24px;padding:25px;box-shadow:0 12px 28px rgba(22,101,52,.06)}
+h2{font-size:clamp(25px,3vw,36px);line-height:1.15;margin:0 0 12px}
+h3{font-size:21px;margin:0 0 10px}
+.muted{color:var(--muted)}
+.pill{display:inline-block;background:var(--light);color:var(--green);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:800;margin-bottom:12px}
+.num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-weight:900;margin-bottom:12px}
+ul{padding-left:20px;margin-bottom:0}
+li{margin-bottom:8px}
+.form{background:linear-gradient(180deg,#fff,#f7fff8);border:2px solid #cfe8d5}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+label{display:block;font-size:14px;font-weight:800;margin-bottom:7px}
+input,select,textarea{width:100%;border:1px solid #cbdccd;border-radius:14px;padding:13px;font-size:15px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(34,197,94,.13)}
+textarea{min-height:92px;resize:vertical}
+.full{grid-column:1/-1}
+.hint{font-size:13px;color:var(--muted);margin-top:5px}
+.result{display:none;margin-top:22px}
+.result.show{display:block}
+.resultHero{background:#0f2f1a;color:#fff;border-radius:24px;padding:25px;margin-bottom:18px}
+.big{font-size:clamp(36px,5vw,56px);font-weight:950;line-height:1;margin:10px 0}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric{background:#fff;border:1px solid var(--border);border-radius:20px;padding:17px}
+.metric small{display:block;color:var(--muted);font-weight:800;text-transform:uppercase;font-size:12px}
+.metric b{display:block;color:var(--green);font-size:28px;margin-top:5px}
+.notice{background:var(--yellow);border:1px solid #fde68a;border-radius:18px;padding:17px;margin-top:16px}
+.recgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+.rec{background:#f8fff9;border:1px solid var(--border);border-radius:18px;padding:18px}
+.warning{background:var(--orange);border-color:#fed7aa}
+.danger{background:var(--red);border-color:#fecdd3}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:18px;margin-top:16px}
+table{width:100%;min-width:760px;border-collapse:collapse;background:#fff}
+th,td{padding:15px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:#f1f8f3}
+.copybox{background:#102719;color:#fff;border-radius:22px;padding:20px;margin-top:18px}
+.copybox textarea{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;min-height:220px}
+.author{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;background:linear-gradient(135deg,#fff,#ecfdf3)}
+.authorSide{background:#12351f;color:#fff;border-radius:20px;padding:23px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{background:rgba(255,255,255,.13);border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800}
+.footer{text-align:center;color:var(--muted);margin-top:28px;font-size:14px}
+@media(max-width:900px){.grid2,.grid3,.formgrid,.metrics,.recgrid,.author{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:30px}}
+@media print{.form,.hero .btn{display:none}.card,.hero{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="hero">
+  <div class="badge">🌿 Для экспертов и мастеров, которые работают на себя</div>
+  <h1>План продаж на месяц без хаоса</h1>
+  <p>Заполните несколько цифр — и получите понятный план: сколько клиентов нужно, откуда их брать, сколько делать касаний, нужен ли трафик и где стоит усилить продуктовую линейку.</p>
+  <a class="btn btn-white" href="#planner">Собрать план продаж</a>
+  <a class="btn btn-soft" href="#why">Зачем это нужно</a>
+</header>
+
+<section id="why" class="grid grid2">
+  <div class="card">
+    <span class="pill">Зачем планировать продажи</span>
+    <h2>План — это не давление. Это ясность.</h2>
+    <p>Когда эксперт работает сам на себя, легко жить в режиме: сегодня выложила сторис, завтра тишина, потом срочно нужно продать.</p>
+    <p class="muted">План помогает заранее понять, сколько клиентов нужно, хватит ли текущего чека и какие действия делать в течение месяца.</p>
+  </div>
+  <div class="card">
+    <span class="pill">Из чего состоит план</span>
+    <h2>Деньги складываются из цифр</h2>
+    <ul>
+      <li><b>Цель по доходу</b> — сколько хотите заработать.</li>
+      <li><b>Средний чек</b> — сколько приносит один клиент.</li>
+      <li><b>Время</b> — сколько клиентов реально сможете взять.</li>
+      <li><b>Источники</b> — база, контент, рекомендации, реклама.</li>
+      <li><b>Действия</b> — что делать каждую неделю.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="grid grid3">
+  <div class="card"><div class="num">1</div><h3>Считаем реальность</h3><p>Сколько клиентов нужно и сможете ли вы физически их обслужить.</p></div>
+  <div class="card"><div class="num">2</div><h3>Распределяем источники</h3><p>Часть клиентов — из базы, часть — из контента, часть — с рекламы.</p></div>
+  <div class="card"><div class="num">3</div><h3>Собираем действия</h3><p>Получается не “вести блог”, а конкретный план продаж на месяц.</p></div>
+</section>
+
+<section id="planner" class="card form">
+  <span class="pill">Калькулятор плана</span>
+  <h2>Соберите свой план продаж на месяц</h2>
+  <p class="muted">Можно заполнять примерно. Задача — увидеть картину и понять, какие действия нужны.</p>
+
+  <div class="formgrid">
+    <div><label>Ваша ниша / услуга</label><input id="niche" placeholder="Психолог, массажист, нутрициолог, бровист"></div>
+    <div><label>Желаемая сумма за месяц, ₸</label><input id="goal" type="number" placeholder="500000"></div>
+    <div><label>Средний чек одной продажи, ₸</label><input id="check" type="number" placeholder="30000"><div class="hint">Если услуг несколько — укажите средний чек.</div></div>
+    <div><label>Сколько времени уходит на 1 клиента, часов</label><input id="hoursPerClient" type="number" step="0.5" placeholder="2"></div>
+    <div><label>Сколько часов готовы работать с клиентами в месяц</label><input id="workHours" type="number" placeholder="60"><div class="hint">Только клиентские часы, без контента.</div></div>
+    <div><label>Есть база клиентов/контактов? Сколько человек</label><input id="base" type="number" placeholder="100"></div>
+    <div><label>Количество подписчиков</label><input id="followers" type="number" placeholder="2500"></div>
+    <div><label>Будет ли реклама / трафик?</label><select id="traffic"><option value="no">Нет, только органика</option><option value="test">Да, небольшой тест</option><option value="yes">Да, готов(а) вкладываться</option></select></div>
+    <div><label>Планируемый бюджет на рекламу, ₸</label><input id="budget" type="number" placeholder="50000"><div class="hint">Если не знаете — оставьте пустым.</div></div>
+    <div><label>Насколько теплая аудитория?</label><select id="warmth"><option value="cold">Холодная: меня мало знают</option><option value="medium" selected>Средняя: иногда пишут, реагируют</option><option value="warm">Теплая: есть доверие и заявки</option></select></div>
+    <div class="full"><label>Какие услуги/продукты есть сейчас?</label><textarea id="offers" placeholder="Консультация 15 000, пакет 4 встречи 55 000, сопровождение 120 000"></textarea></div>
+    <div class="full"><button class="btn btn-green" onclick="calculatePlan()">Собрать план продаж</button><button class="btn btn-soft" onclick="resetForm()" type="button">Очистить</button></div>
+  </div>
+
+  <div id="result" class="result">
+    <div class="resultHero">
+      <div class="badge">Ваш ориентир на месяц</div>
+      <h2 id="resultTitle">План продаж готов</h2>
+      <div class="big" id="neededClients">0 клиентов</div>
+      <p id="resultSubtitle"></p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><small>Цель</small><b id="mGoal">0 ₸</b><span class="muted">желаемый доход</span></div>
+      <div class="metric"><small>Средний чек</small><b id="mCheck">0 ₸</b><span class="muted">за продажу</span></div>
+      <div class="metric"><small>Нужно продаж</small><b id="mClients">0</b><span class="muted">на месяц</span></div>
+      <div class="metric"><small>Время</small><b id="mHours">0 ч</b><span class="muted">на услуги</span></div>
+    </div>
+
+    <div id="capacityNotice" class="notice"></div>
+
+    <div class="grid grid2" style="margin-top:18px">
+      <div class="card"><h3>Откуда брать клиентов</h3><p class="muted">Примерное распределение источников.</p><ul id="sourceList"></ul></div>
+      <div class="card"><h3>Сколько действий нужно</h3><p class="muted">Ориентир по активности.</p><ul id="actionList"></ul></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h3>Примерный недельный план</h3>
+      <div class="tablewrap"><table><thead><tr><th>Неделя</th><th>Фокус</th><th>Что делать</th><th>Цель недели</th></tr></thead><tbody id="weekPlan"></tbody></table></div>
+    </div>
+
+    <div class="recgrid" id="recommendations"></div>
+
+    <div class="copybox">
+      <h3>Короткая версия плана</h3>
+      <p style="color:rgba(255,255,255,.72)">Скопируйте себе в заметки, Notion, Excel или отправьте наставнику.</p>
+      <textarea id="copyText" readonly></textarea>
+      <button class="btn btn-white" onclick="copyPlan()">Скопировать план</button>
+      <button class="btn btn-soft" onclick="window.print()">Сохранить PDF</button>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <span class="pill">Важная мысль</span>
+  <h2>Если чек маленький, а цель большая — дело не только в контенте</h2>
+  <p>Иногда эксперт думает: “Мне нужно просто больше сторис”. Но если средний чек низкий, придется брать слишком много клиентов. Это быстро приводит к усталости.</p>
+  <div class="grid grid3">
+    <div class="card"><h3>Поднять чек</h3><p>Упаковать услугу глубже: не разовая встреча, а пакет или сопровождение.</p></div>
+    <div class="card"><h3>Сделать линейку</h3><p>Добавить входной продукт, основной продукт и дорогой формат.</p></div>
+    <div class="card"><h3>Усилить продажи</h3><p>Работать с базой, офферами, доверием, переписками и касаниями.</p></div>
+  </div>
+</section>
+
+<section class="card author">
+  <div>
+    <span class="pill">Об авторе</span>
+    <h2>Этот инструмент создан для экспертов, которым нужен не хаос, а система</h2>
+    <p>Меня зовут Асель. Я маркетолог и помогаю экспертам, мастерам и небольшим проектам выстраивать блог не ради “красивой картинки”, а как понятную систему: цель → продукт → контент → продажи.</p>
+    <p class="muted">Мой подход простой: сначала считаем цифры, потом собираем действия. Так блог становится рабочим инструментом.</p>
+  </div>
+  <div class="authorSide">
+    <h3>Чем я могу быть полезна</h3>
+    <p>Если после расчета хочется больше ясности — можно разобрать ваш блог, продуктовую линейку и план продаж на ближайший месяц.</p>
+    <div class="tags"><span class="tag">аудит блога</span><span class="tag">план продаж</span><span class="tag">контент-система</span><span class="tag">упаковка</span><span class="tag">стратегия</span></div>
+  </div>
+</section>
+
+<div class="footer">План — это не гарантия продаж. План — это способ видеть, какие действия приведут к результату.</div>
+</div>
+
+<script>
+function money(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n||0))+' ₸'}
+function num(id){return Number(document.getElementById(id).value||0)}
+function val(id){return document.getElementById(id).value.trim()}
+function end(n){n=Math.abs(n)%100;let n1=n%10;if(n>10&&n<20)return'ов';if(n1>1&&n1<5)return'а';if(n1===1)return'';return'ов'}
+
+function calculatePlan(){
+  const niche=val('niche')||'вашей нише';
+  const goal=num('goal'), check=num('check'), hpc=num('hoursPerClient'), wh=num('workHours');
+  const base=num('base'), followers=num('followers'), budgetInput=num('budget');
+  const traffic=document.getElementById('traffic').value;
+  const warmth=document.getElementById('warmth').value;
+  const offers=val('offers');
+
+  if(!goal||!check){alert('Заполните минимум желаемую сумму и средний чек.');return}
+
+  const clients=Math.ceil(goal/check);
+  const reqHours=hpc?clients*hpc:0;
+  const cap=(hpc&&wh)?Math.floor(wh/hpc):null;
+  const capRevenue=cap?cap*check:0;
+
+  let baseRate=warmth==='warm'?0.06:warmth==='medium'?0.035:0.018;
+  let contentRate=warmth==='warm'?0.006:warmth==='medium'?0.003:0.0015;
+
+  let fromBase=Math.min(clients,Math.floor(base*baseRate));
+  let left=Math.max(0,clients-fromBase);
+  let fromContent=followers?Math.min(left,Math.max(1,Math.floor(followers*contentRate))):Math.min(left,Math.ceil(clients*.35));
+  left=Math.max(0,clients-fromBase-fromContent);
+  let fromAds=0, suggestedBudget=0;
+
+  if(traffic==='yes'||traffic==='test'){
+    fromAds=left;
+    const leadCost=check<20000?900:check<50000?1500:2500;
+    suggestedBudget=budgetInput||fromAds*8*leadCost;
+  }else{
+    fromContent+=left;
+  }
+
+  const touches=Math.max(clients*8,20);
+  const dialogues=Math.max(clients*4,10);
+  const offersWeek=Math.max(2,Math.ceil(clients/4));
+  const storiesWeek=Math.max(10,Math.ceil(clients*2));
+  const postsMonth=Math.max(6,Math.ceil(clients*.8));
+  const baseContacts=Math.min(base||touches,Math.max(10,clients*6));
+  const weeklyClients=Math.ceil(clients/4);
+
+  document.getElementById('result').classList.add('show');
+  document.getElementById('resultTitle').textContent='План продаж для '+niche;
+  document.getElementById('neededClients').textContent=clients+' клиент'+end(clients);
+  document.getElementById('resultSubtitle').textContent='Чтобы выйти на '+money(goal)+' при среднем чеке '+money(check)+', нужно примерно '+clients+' продаж за месяц.';
+  document.getElementById('mGoal').textContent=money(goal);
+  document.getElementById('mCheck').textContent=money(check);
+  document.getElementById('mClients').textContent=clients;
+  document.getElementById('mHours').textContent=reqHours?Math.round(reqHours)+' ч':'—';
+
+  const notice=document.getElementById('capacityNotice');
+  if(cap!==null&&cap<clients){
+    notice.innerHTML='<b>Важный сигнал:</b> по времени вы сможете взять примерно '+cap+' клиент'+end(cap)+', а для цели нужно '+clients+'. Значит, нужно поднимать чек, собирать пакетную услугу, добавлять групповой формат или уменьшать цель. Потолок выручки сейчас около <b>'+money(capRevenue)+'</b>.';
+  }else if(cap!==null){
+    notice.innerHTML='<b>По времени план выглядит реалистично:</b> при вашей загрузке можно обслужить примерно '+cap+' клиент'+end(cap)+'. Главное — обеспечить заявки и диалоги.';
+  }else{
+    notice.innerHTML='<b>Совет:</b> укажите время на одного клиента и доступные часы, чтобы увидеть реалистичность цели.';
+  }
+
+  document.getElementById('sourceList').innerHTML=
+    '<li><b>'+fromBase+'</b> клиент'+end(fromBase)+' — из базы и прошлых контактов.</li>'+
+    '<li><b>'+fromContent+'</b> клиент'+end(fromContent)+' — из контента, сторис, рилс, прогрева.</li>'+
+    '<li><b>'+fromAds+'</b> клиент'+end(fromAds)+' — через рекламу / платный трафик.</li>'+
+    '<li><b>'+clients+'</b> клиент'+end(clients)+' — общий месячный ориентир.</li>';
+
+  const budgetLine=traffic==='no'?'Рекламу можно не запускать, но тогда нужно больше контента и работы с базой.':'Ориентир рекламного бюджета: '+money(suggestedBudget)+'. Это стартовая гипотеза для теста.';
+  document.getElementById('actionList').innerHTML=
+    '<li><b>'+Math.ceil(touches)+'</b> касаний в месяц: сторис, посты, личные сообщения, отзывы.</li>'+
+    '<li><b>'+dialogues+'</b> целевых диалогов.</li>'+
+    '<li><b>'+baseContacts+'</b> контактов из базы: написать, напомнить, пригласить.</li>'+
+    '<li><b>'+storiesWeek+'</b> сторис в неделю и примерно <b>'+postsMonth+'</b> рилс/постов в месяц.</li>'+
+    '<li><b>'+offersWeek+'</b> прямых оффера в неделю.</li>'+
+    '<li>'+budgetLine+'</li>';
+
+  document.getElementById('weekPlan').innerHTML=
+    '<tr><td><b>1 неделя</b></td><td>Диагностика и база</td><td>Собрать список теплых контактов, написать базе, показать услугу, выложить 1–2 экспертных материала.</td><td>'+weeklyClients+' клиент'+end(weeklyClients)+' или '+dialogues+' диалогов в работе</td></tr>'+
+    '<tr><td><b>2 неделя</b></td><td>Прогрев и доверие</td><td>Показать кейсы, отзывы, процесс работы, частые ошибки клиентов. Сделать прямое приглашение.</td><td>'+weeklyClients+' клиент'+end(weeklyClients)+' + заявки из контента</td></tr>'+
+    '<tr><td><b>3 неделя</b></td><td>Активные продажи</td><td>Повторить оффер, разобрать возражения, сделать ограничение по местам/датам, провести консультации.</td><td>'+weeklyClients+' клиент'+end(weeklyClients)+' + закрытие теплых диалогов</td></tr>'+
+    '<tr><td><b>4 неделя</b></td><td>Дожим и анализ</td><td>Вернуться к тем, кто думал, предложить следующий шаг, посчитать факт продаж.</td><td>Добрать план и подготовить следующий месяц</td></tr>';
+
+  let recs=[];
+  if(check<20000&&goal>=500000)recs.push(['warning','Нужна продуктовая линейка','При маленьком чеке и высокой цели придется брать слишком много клиентов. Добавьте пакет, курс, сопровождение или premium-формат.']);
+  if(cap!==null&&cap<clients)recs.push(['danger','Цель упирается во время','Вы физически не успеете обслужить нужное количество клиентов. Решение: поднять чек, сократить длительность услуги или добавить групповой формат.']);
+  if(base<50)recs.push(['warning','Базу нужно наращивать','Если база маленькая, нельзя рассчитывать только на “своих”. Нужны контент, коллаборации, реклама, лид-магнит.']);
+  else recs.push(['','Работайте с базой','У вас уже есть контакты. Напишите бывшим клиентам, интересовавшимся, знакомым и теплым подписчикам.']);
+  if(followers<1000)recs.push(['warning','Контенту нужна регулярность','При небольшой аудитории важно делать не только публикации, но и личные касания, коллаборации и приглашения в диалог.']);
+  else recs.push(['','Используйте контент как воронку','Нужны боли, кейсы, процесс, отзывы, офферы и понятные призывы написать вам.']);
+  if(traffic==='no'&&clients>10)recs.push(['warning','Без трафика нужен высокий темп','Если рекламы не будет, придется компенсировать это активностью: база, сторис, рилс, партнерства, личные сообщения.']);
+
+  document.getElementById('recommendations').innerHTML=recs.map(r=>'<div class="rec '+r[0]+'"><h3>'+r[1]+'</h3><p>'+r[2]+'</p></div>').join('');
+
+  const copy='ПЛАН ПРОДАЖ НА МЕСЯЦ\n\nНиша: '+niche+'\nЦель: '+money(goal)+'\nСредний чек: '+money(check)+'\nНужно продаж: '+clients+'\nВремя на услуги: '+(reqHours?Math.round(reqHours)+' часов':'не указано')+'\n\nИсточники клиентов:\n— из базы: '+fromBase+'\n— из контента: '+fromContent+'\n— из рекламы: '+fromAds+'\n\nДействия:\n— '+Math.ceil(touches)+' касаний в месяц\n— '+dialogues+' целевых диалогов\n— '+baseContacts+' контактов из базы\n— '+storiesWeek+' сторис в неделю\n— '+postsMonth+' рилс/постов в месяц\n— '+offersWeek+' прямых оффера в неделю\n\nРекомендация:\n'+((cap!==null&&cap<clients)?'Цель упирается во время. Нужно поднять чек, добавить пакет/сопровождение или пересобрать продуктовую линейку.':'План выглядит реалистично, если регулярно работать с базой, контентом и продажами.')+'\n\nТекущие услуги:\n'+(offers||'не указаны');
+  document.getElementById('copyText').value=copy;
+  setTimeout(()=>document.getElementById('result').scrollIntoView({behavior:'smooth'}),100);
+}
+function copyPlan(){const el=document.getElementById('copyText');el.select();document.execCommand('copy');alert('План скопирован.')}
+function resetForm(){['niche','goal','check','hoursPerClient','workHours','base','followers','budget','offers'].forEach(id=>document.getElementById(id).value='');document.getElementById('traffic').value='no';document.getElementById('warmth').value='medium';document.getElementById('result').classList.remove('show')}
+</script>
+</body>
+</html>
